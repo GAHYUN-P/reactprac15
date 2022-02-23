@@ -8,7 +8,8 @@ export const initialState = {
   isValidEmailMultiple: false, // email 중복체크 결과
   loginError: null, // 로그인시 서버에러
   authNumber: '', // 비밀번호 찾기시 인증번호
-  is_login: false // 로그인 상태
+  is_login: false, // 로그인 상태
+  allUserList: [],
 };
 
 const login = createAction('user/LOGIN'); // 로그인 - user정보, 로그인상태 변경
@@ -18,6 +19,7 @@ const setIsValidEmailMultiple = createAction(
   'user/SET_IS_VALID_EMAIL_MULTIPLE'
 );
 const setAuthNumber = createAction('user/SET_AUTH_NUMBER'); // 비밀번호 찾기 메일 인증번호
+const setAllUserList = createAction('user/SET_ALL_USER_LIST'); // 모든 유저 정보 가져오기
 
 const user = createReducer(initialState, {
   [login]: (state, { payload }) => {
@@ -48,7 +50,11 @@ const user = createReducer(initialState, {
   [setAuthNumber]: (state, { payload }) => {
     // 비밀번호 변경시 인증번호
     state.authNumber = payload;
-  }
+  },
+  [setAllUserList]: (state, { payload }) => {
+    // 전체 유저 이메일, 닉네임 가져오기
+    state.allUserList = [...payload];
+  },
 });
 
 // thunk
@@ -192,10 +198,24 @@ const fetchUserProfile = (type = 0) => async (
   }
 };
 
+// 유저 이메일 닉네임 리스트 가져오기
+const getAllUserList = () => async (dispatch, getState, { history }) => {
+  try {
+    console.log('미들웨어')
+    const res = await userAPI.getAllUserList();
+    console.log(res.data);
+    dispatch(setAllUserList(res.data));
+  }
+  catch (error) {
+    console.log(error);
+  }
+};
+
 export const userActions = {
   signup,
   emailCheck,
   setIsValidEmailMultiple,
+  getAllUserList,
   fetchLogin,
   login,
   logout,

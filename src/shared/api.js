@@ -34,6 +34,9 @@ export const userAPI = {
   },
   updateUserProfile: function (userId, data) {
     return axios.put(`/api/user/profile/${userId}`, data);
+  },
+  getAllUserList: function (data) {
+    return axios.get(`/api/user`);
   }
 };
 

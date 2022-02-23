@@ -17,6 +17,9 @@ import { headerActions } from '../redux/modules/header';
 
 import { chatActions } from '../redux/modules/chat';
 
+// 유저 정보 뜰 모달
+import InvitePop from './InvitePop';
+
 const Header = (props) => {
   // 각 메뉴의 활성화 상태
   const { headerChat, headerInfo } = useSelector((state) => state.header);
@@ -30,8 +33,24 @@ const Header = (props) => {
     window.location.reload();
   };
 
+  // 팝업창 키기/종료
+  //  false가 기본 상태
+  const [popupOpen, setPopupOpen] = React.useState(false);
+
+  // 팝업창 키기/끄기 함수
+  const openPopup = () => {
+    setPopupOpen(true);
+  };
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
+
   return (
     <Container>
+      <button onClick={openPopup}>유저 정보 모달</button>
+      {/* 유저 정보 보기 팝업 창 */}
+      {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
+
       {/* 메뉴 활성화 상태에 따른 렌더링 */}
       {headerChat ? (
         <IconWrap>

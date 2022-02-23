@@ -27,8 +27,6 @@ const InvitePop = (props) => {
   const roomId = useSelector((state) => state.chat.currentChat.roomId);
   // 초대받는 사람 email
   const [email, setEmail] = React.useState();
-  // 사용자가 고른 카테고리(태그) 가져오기
-  const Tags = useSelector((state) => state.chat.selectedCategory);
 
   // 초대하는 사람 이메일 입력받기
   const onChangeInvite = (e) => {

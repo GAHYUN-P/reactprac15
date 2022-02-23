@@ -34,7 +34,7 @@ const Chat = (props) => {
         <ChatTitle>{roomName}</ChatTitle>
         <ChatText>
           <Image size="15px" src={userProfile} />
-          {userName} | {createdAt}
+          {userName} |
           <CategoryText>
             {categoryInfo.map((c, idx) => {
               return ' ' + c + ' '

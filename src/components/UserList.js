@@ -53,21 +53,33 @@ const UserList = (props) => {
 
     <PopupOverlay>
       <PopupInner ref={popupInside}>
-        {AllUserinfo.map((info, idx) => {
-        return (
-          <UserListEach
-            key={idx}
-            username={info.name}
-            email={info.email}
-            />
-        );
-        })}
+        <Wrap style={{ fontSize:"2rem", fontWeight:"bold"}}>유저정보</Wrap>
+        <Container>
+            {AllUserinfo.map((info, idx) => {
+            return (
+              <UserListEach
+                key={idx}
+                username={info.name}
+                email={info.email}
+                />
+            );
+            })}
+        </Container>
       </PopupInner>
-    </PopupOverlay >
+    </PopupOverlay>
   )
 
 }
 
+const Wrap = styled.div`
+  margin: 5% 5% 0 5%;
+  line-height: 2rem;
+`
+
+const Container = styled.div`
+  margin: 5%;
+  line-height: 2rem;
+`
 
 const PopupOverlay = styled.div`
   ${(props) => props.theme.border_box};
@@ -83,8 +95,9 @@ const PopupOverlay = styled.div`
 `
 
 const PopupInner = styled.div`
-  ${(props) => props.theme.border_box};
-  ${(props) => props.theme.flex_column};
+  /* ${(props) => props.theme.border_box}; */
+  display: flex;
+  flex-direction: column;
   position: relative;
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
   width: 50%;
@@ -98,37 +111,7 @@ const PopupInner = styled.div`
     width: 90%
   }
 
-`
-
-const PopupButtons = styled.div`
-${(props) => props.theme.flex_row}
-width: 80%;
-margin: 0px 0px 20px 0px;
-`
-
-const InputWrap = styled.div`
-${(props) => props.theme.flex_row}
-justify-content: center;
-  width: 80%;
-  margin: 10px 0px 10px 0px;
-`
-const TagWrap = styled.div`
-${(props) => props.theme.flex_row}
-margin: 0px 5px;
-  padding: 5px;
-  font-size: 1rem;
-  background-color: orange;
-  border-radius: 10px;
-  color: whitesmoke;
-  & span{
-    cursor: pointer;
-    font-size: 10px;
-    margin-left: 5px;
-  }
-  @media ${(props) => props.theme.mobile} {
-    font-size: 0.7rem;
-  }
-`
+`;
 
 
 export default UserList;

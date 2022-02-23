@@ -45,6 +45,7 @@ const InvitePop = (props) => {
   }
 
   const popupInside = React.useRef();
+  
   //  바깥 클릭시 팝업 끄기
   const clickOutside = ({ target }) => {
     if (!popupInside.current.contains(target)) {

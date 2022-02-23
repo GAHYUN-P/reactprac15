@@ -100,7 +100,7 @@ const ChatList = (props) => {
               createdAt={info.createdAt}
               modifiedAt={info.modifiedAt}
               roomImg={info.chatRoomImg}
-              userName={info.user?.username}
+              userName={info.username}
               userProfile={info.user?.profileUrl}
               category={info.category}
               _onClick={(e) => {

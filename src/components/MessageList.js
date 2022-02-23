@@ -15,6 +15,8 @@ import InvitePop from '../components/InvitePop';
 // 방 나가기 API
 import chat, { chatActions } from '../redux/modules/chat';
 
+import { IoLogOutOutline } from 'react-icons/io5';
+
 
 // 메시지 리스트 컴포넌트
 const MessageList = (props) => {
@@ -47,12 +49,10 @@ const MessageList = (props) => {
   const openPopup = () => {
     setPopupOpen(true);
   };
+
   const closePopup = () => {
     setPopupOpen(false);
   };
-
-  // 방 나갔을때/안 나갔을때
-  const [roomOut, setRoomOut] = React.useState(false);
 
   // 방 나가기
   const onClickOutRoom = () => {
@@ -72,15 +72,20 @@ const MessageList = (props) => {
 
       <div ref={messageEndRef}></div>
 
-      <button onClick={openPopup}>초대하기</button>
-      {/* 초대하기 팝업 창 */}
-      {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
+      <BtnContainer>
+        <Button onClick={openPopup} width="10%">초대하기</Button>
+        {/* 초대하기 팝업 창 */}
+        {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
+        
+        <Button _onClick={(e) => {
+                onClickOutRoom();
+                e.stopPropagation();
+                }}
+                width="10%"
+                margin="0px 2px"
+                >나가기</Button>
+      </BtnContainer>
       
-      <Button _onClick={(e) => {
-              onClickOutRoom();
-              e.stopPropagation();
-              }}
-              >나가기</Button>
     </Container>
   );
 };
@@ -91,6 +96,22 @@ const Container = styled.div`
   justify-content: flex-start;
   width: 100%;
   height: 100%;
+  padding: 30px 30px 60px 30px;
+  overflow: auto;
+  @media ${(props) => props.theme.mobile} {
+    height: 90%;
+    padding: 30px 10px 90px 10px;
+  }
+`;
+
+const BtnContainer = styled.div`
+  ${(props) => props.theme.border_box};
+  display: flex;
+  position: fixed;
+  bottom: 76%;
+  left: 33%;
+  width: 100%;
+  height: 18%;
   padding: 30px 30px 60px 30px;
   overflow: auto;
   @media ${(props) => props.theme.mobile} {

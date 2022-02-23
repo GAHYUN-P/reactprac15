@@ -10,6 +10,7 @@ import {
   IoPerson,
   IoConstructOutline
 } from 'react-icons/io5';
+import { AiFillExclamationCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../redux/modules/user';
 
@@ -47,12 +48,10 @@ const Header = (props) => {
 
   return (
     <Container>
-      {/* <IconWrap
+      <IconWrap
         onClick={openPopup}>
-        
-        
-      </IconWrap> */}
-      <button onClick={openPopup}>유저 정보 모달</button>
+        <AiFillExclamationCircle/>
+      </IconWrap>
       {/* 유저 정보 보기 팝업 창 */}
       {popupOpen && <UserList visible={popupOpen} closePopup={closePopup} />}
 

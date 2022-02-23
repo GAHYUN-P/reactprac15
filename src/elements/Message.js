@@ -64,19 +64,11 @@ const Message = (props) => {
   }
   // 사용자 입장 메시지
   if (messageInfo.type === "ENTER") {
-    return (
-      <EnterWrap >
-        {messageInfo.message}
-      </EnterWrap>
-    )
+    return <></>;
   }
   // 사용자 퇴장 메시지
   if (messageInfo.type === "QUIT") {
-    return (
-      <QuitWrap >
-        {messageInfo.message}
-      </QuitWrap>
-    )
+    return <></>;
   }
   // 상대방 메시지
   else {

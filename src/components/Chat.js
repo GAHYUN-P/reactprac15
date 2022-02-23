@@ -10,7 +10,7 @@ import { Image } from '../elements';
 
 // 현재 존재하는 채팅을 보여주는 컴포넌트
 const Chat = (props) => {
-  const { roomName, _onClick, roomId, roomImg, userName, userProfile, category } = props;
+  const { roomName, _onClick, roomId, roomImg, userName, userProfile, category, createdAt } = props;
   // 카테고리 2개까지 표시
   const categoryInfo = [];
   for (let i = 0; i < 2; i++) {
@@ -34,11 +34,10 @@ const Chat = (props) => {
         <ChatTitle>{roomName}</ChatTitle>
         <ChatText>
           <Image size="15px" src={userProfile} />
-          {userName} |
+          {userName} | {createdAt}
           <CategoryText>
             {categoryInfo.map((c, idx) => {
               return ' ' + c + ' '
-
             })}
           </CategoryText>
         </ChatText>

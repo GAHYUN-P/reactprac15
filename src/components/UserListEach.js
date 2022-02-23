@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const InviteList = (props) => {
+const UserListEach = (props) => {
   
   
   return (
@@ -15,4 +15,4 @@ const Container = styled.div`
   
 `;
 
-export default InviteList;
+export default UserListEach;

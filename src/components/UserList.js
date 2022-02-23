@@ -8,41 +8,30 @@ import { Input, Button } from '../elements';
 // 방 생성 API
 import chat, { chatActions } from '../redux/modules/chat';
 
+// 유저 리스트 가져오기 API
+import { userActions } from '../redux/modules/user';
+
 // 유틸
 import { utilActions } from '../redux/modules/util';
 
 // 리덕스
 import { useDispatch, useSelector } from 'react-redux';
 
-import Upload from './Upload';
+import Upload from '../components/Upload';
 
 // select
 import { Select } from '@class101/ui';
+
+// component
+import UserListEach from './UserListEach';
 
 // 채팅방 생성 창
 const UserList = (props) => {
   const { closePopup, visible } = props;
   const dispatch = useDispatch();
-  // 현재 roomId 가져오기
-  const roomId = useSelector((state) => state.chat.currentChat.roomId);
-  // 초대받는 사람 email
-  const [email, setEmail] = React.useState();
-
-  // 초대하는 사람 이메일 입력받기
-  const onChangeInvite = (e) => {
-    setEmail(e.target.value);
-  }
-
-  // 방 생성하기
-  const onClickCreateRoom = () => {
-
-    const data = {
-      email: email,
-      roomId: roomId,
-    }
-
-    dispatch(chatActions.inviteRoom(data, closePopup));
-  }
+  // 전체 유저 정보 가져오기
+  const AllUserinfo = useSelector((state) => state.user.allUserList);
+  console.log(AllUserinfo);
 
   const popupInside = React.useRef();
   //  바깥 클릭시 팝업 끄기
@@ -54,6 +43,7 @@ const UserList = (props) => {
 
   React.useEffect(() => {
     window.addEventListener("click", clickOutside);
+    dispatch(userActions.getAllUserList());
     return () => {
       window.removeEventListener("click", clickOutside);
     };
@@ -63,31 +53,15 @@ const UserList = (props) => {
 
     <PopupOverlay>
       <PopupInner ref={popupInside}>
-        <InputWrap>
-          <Input
-            _onChange={onChangeInvite}
-            placeholder='초대할 분의 Email ID를 입력해주세요.'
-          ></Input>
-        </InputWrap>
-        <PopupButtons>
-          <Button
-            width="40%"
-            _onClick={(e) => {
-              onClickCreateRoom();
-              e.stopPropagation();
-            }
-            }
-          >초대하기</Button>
-          <Button
-            width="40%"
-            _onClick={(e) => {
-              setEmail('');
-              closePopup();
-              e.stopPropagation();
-            }
-            }
-          >취소</Button>
-        </PopupButtons>
+        {AllUserinfo.map((info, idx) => {
+        return (
+          <UserListEach
+            key={idx}
+            username={info.name}
+            email={info.email}
+            />
+        );
+        })}
       </PopupInner>
     </PopupOverlay >
   )

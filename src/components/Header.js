@@ -18,7 +18,7 @@ import { headerActions } from '../redux/modules/header';
 import { chatActions } from '../redux/modules/chat';
 
 // 유저 정보 뜰 모달
-import InvitePop from './InvitePop';
+import UserList from './UserList';
 
 const Header = (props) => {
   // 각 메뉴의 활성화 상태
@@ -47,9 +47,14 @@ const Header = (props) => {
 
   return (
     <Container>
+      {/* <IconWrap
+        onClick={openPopup}>
+        
+        
+      </IconWrap> */}
       <button onClick={openPopup}>유저 정보 모달</button>
       {/* 유저 정보 보기 팝업 창 */}
-      {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
+      {popupOpen && <UserList visible={popupOpen} closePopup={closePopup} />}
 
       {/* 메뉴 활성화 상태에 따른 렌더링 */}
       {headerChat ? (

@@ -35,11 +35,11 @@ function AppLayout(props) {
       dispatch(userActions.fetchUserProfile());
     }
   }, []);
+  
   return (
     <Container>
       {/* 로그인했을 때만 헤더 노출 */}
-      {/* {is_login && <Header />} */}
-      <Header/>
+      {is_login && <Header />}
       <Main>{props.children}</Main>
     </Container>
   );

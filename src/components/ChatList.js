@@ -69,6 +69,8 @@ const ChatList = (props) => {
     dispatch(chatActions.moveChat({ roomId: roomId, roomName: roomName, category: category }));
     // 해당 채팅방의 DB 가져오기
     dispatch(chatActions.getChatMessages());
+    // 나가기상태를 다시 false로 만들어주기
+    dispatch(chatActions.outRoomStat(false));
     return;
   };
 

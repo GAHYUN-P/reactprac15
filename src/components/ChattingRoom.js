@@ -146,6 +146,18 @@ const ChattingRoom = (props) => {
     }
   }
 
+  // 나가기 상태 보여주기
+  const outRoomStat = useSelector((state) => state.chat.chatOut);
+
+  if(outRoomStat === true){
+    return (
+      <Container>
+        <ChatList prevRoomId={roomId} />
+        <NoRoom />
+      </Container>
+    );
+  }
+
   return (
     <Container>
       <ChatList prevRoomId={roomId} />

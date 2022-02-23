@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 // elements
 import Message from '../elements/Message';
+import { Input, Button } from '../elements';
 
 // 리덕스 접근
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,10 +12,15 @@ import { useSelector, useDispatch } from 'react-redux';
 // components
 import InvitePop from '../components/InvitePop';
 
+// 방 나가기 API
+import chat, { chatActions } from '../redux/modules/chat';
+
 
 // 메시지 리스트 컴포넌트
 const MessageList = (props) => {
+  
   const messages = useSelector((state) => state.chat.messages);
+  const roomId = useSelector((state) => state.chat.currentChat.roomId);
 
   const dispatch = useDispatch();
 
@@ -45,6 +51,18 @@ const MessageList = (props) => {
     setPopupOpen(false);
   };
 
+  // 방 나갔을때/안 나갔을때
+  const [roomOut, setRoomOut] = React.useState(false);
+
+  // 방 나가기
+  const onClickOutRoom = () => {
+    console.log('온클릭 함수' + roomId);
+    dispatch(chatActions.outRoom(roomId));
+    dispatch(chatActions.outRoomStat(true));
+  }
+
+  
+
 
   return (
     <Container className="scroll" id="messagelist">
@@ -55,10 +73,14 @@ const MessageList = (props) => {
       <div ref={messageEndRef}></div>
 
       <button onClick={openPopup}>초대하기</button>
-      {/* 채팅 생성 팝업 창 */}
+      {/* 초대하기 팝업 창 */}
       {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
       
-      <button>나가기</button>
+      <Button _onClick={(e) => {
+              onClickOutRoom();
+              e.stopPropagation();
+              }}
+              >나가기</Button>
     </Container>
   );
 };

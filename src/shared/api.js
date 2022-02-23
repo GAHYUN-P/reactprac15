@@ -42,7 +42,10 @@ export const chatAPI = {
     return axios.post(`/api/chat/rooms`, data);
   },
   outRoom: function (roomId) {
-    return axios.post(`/api/chat/rooms/${roomId}`);
+    return axios.delete(`/api/chat/rooms/${roomId}`);
+  },
+  inviteRoom: function (data) {
+    return axios.post(`/api/chat/invite`, data);
   },
   getChatList: function () {
     return axios.get(`/api/chat/rooms`);

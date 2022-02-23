@@ -6,6 +6,7 @@ import { chatAPI } from '../../shared/api';
 export const initialState = {
   // 채팅 리스트를 받는 배열
   chatInfo: [],
+  // 나가기 누름 여부
   chatOut: false,
   // 현재 접속 채팅 방
   currentChat: {
@@ -29,7 +30,7 @@ export const initialState = {
 // 채팅 리스트를 다루는 액션
 const getChat = createAction('chat/GETCHAT');
 // 채팅방 나가기
-const outChat = createAction('chat/OUTCHAT');
+const outRoomStat = createAction('chat/OUTROOMSTAT');
 // 채팅방을 옮기는 액션
 const moveChat = createAction('chat/MOVECHAT');
 // 채팅방의 대화 내용을 가져오기
@@ -58,7 +59,7 @@ const chat = createReducer(initialState, {
   [getChat]: (state, action) => {
     state.chatInfo = action.payload;
   },
-  [outChat]: (state, action) => {
+  [outRoomStat]: (state, action) => {
     state.chatOut = action.payload;
   },
   [moveChat]: (state, action) => {
@@ -98,7 +99,7 @@ const chat = createReducer(initialState, {
   }
 });
 
-
+// 채팅방 생성
 const createRoom = (data, closePopup) => async (dispatch, getState, { history }) => {
   try {
     const res = await chatAPI.createRoom(data);
@@ -135,11 +136,24 @@ const getChatMessages = () => async (dispatch, getState, { history }) => {
   }
 };
 
-const outRoom = (data, closePopup) => async (dispatch, getState, { history }) => {
+// 채팅방 나가기
+const outRoom = () => async (dispatch, getState, { history }) => {
   try {
     const roomId = getState().chat.currentChat.roomId;
     const res = await chatAPI.outRoom(roomId);
-    window.alert('채팅방이 생성되었습니다.')
+    console.log('미들웨어 작동' + roomId);
+    dispatch(getChatList());
+  }
+  catch (error) {
+    console.log(error);
+  }
+};
+
+// 채팅방 초대
+const inviteRoom = (data, closePopup) => async (dispatch, getState, { history }) => {
+  try {
+    const res = await chatAPI.inviteRoom(data);
+    window.alert('초대 성공!')
     dispatch(getChatList());
     closePopup();
   }
@@ -148,9 +162,11 @@ const outRoom = (data, closePopup) => async (dispatch, getState, { history }) =>
   }
 };
 
-
 export const chatActions = {
   createRoom,
+  outRoom,
+  outRoomStat,
+  inviteRoom,
   getChatList,
   moveChat,
   getMessages,

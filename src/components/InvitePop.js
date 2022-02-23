@@ -23,28 +23,27 @@ import { Select } from '@class101/ui';
 const InvitePop = (props) => {
   const { closePopup, visible } = props;
   const dispatch = useDispatch();
-  // 프리뷰 가져오기
-  const preview = useSelector((state) => state.util.preview);
-  // 채팅방 이름
-  const [chatRoomName, setRoomName] = React.useState();
+  // 현재 roomId 가져오기
+  const roomId = useSelector((state) => state.chat.currentChat.roomId);
+  // 초대받는 사람 email
+  const [email, setEmail] = React.useState();
   // 사용자가 고른 카테고리(태그) 가져오기
   const Tags = useSelector((state) => state.chat.selectedCategory);
 
-  // 방 이름 입력받기
-  const onChangeRoomName = (e) => {
-    setRoomName(e.target.value);
+  // 초대하는 사람 이메일 입력받기
+  const onChangeInvite = (e) => {
+    setEmail(e.target.value);
   }
 
   // 방 생성하기
   const onClickCreateRoom = () => {
 
     const data = {
-      chatRoomImg: preview,
-      chatRoomName: chatRoomName,
-      category: Tags,
+      email: email,
+      roomId: roomId,
     }
-    dispatch(utilActions.setPreview(null));
-    dispatch(chatActions.createRoom(data, closePopup));
+
+    dispatch(chatActions.inviteRoom(data, closePopup));
   }
 
   const popupInside = React.useRef();
@@ -53,21 +52,6 @@ const InvitePop = (props) => {
     if (!popupInside.current.contains(target)) {
       closePopup()
     }
-  }
-
-  // 카테고리 선택
-  const selectCategory = (e) => {
-    // 같은 카테고리가 있으면 선택하지 못하게 하기
-    if (Tags.includes(e.target.value)) {
-      window.alert('중복해서 고를 수 없습니다.');
-      return
-    }
-    dispatch(chatActions.setCategory(e.target.value));
-  }
-
-  // 태그 삭제
-  const deleteCategory = (value) => {
-    dispatch(chatActions.deleteCategory(value));
   }
 
   React.useEffect(() => {
@@ -83,7 +67,7 @@ const InvitePop = (props) => {
       <PopupInner ref={popupInside}>
         <InputWrap>
           <Input
-            _onChange={onChangeRoomName}
+            _onChange={onChangeInvite}
             placeholder='초대할 분의 Email ID를 입력해주세요.'
           ></Input>
         </InputWrap>
@@ -99,7 +83,7 @@ const InvitePop = (props) => {
           <Button
             width="40%"
             _onClick={(e) => {
-              setRoomName('');
+              setEmail('');
               closePopup();
               e.stopPropagation();
             }

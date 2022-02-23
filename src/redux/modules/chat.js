@@ -135,13 +135,12 @@ const getChatMessages = () => async (dispatch, getState, { history }) => {
   }
 };
 
-const outRoom = (data, closePopup) => async (dispatch, getState, { history }) => {
+const outRoom = () => async (dispatch, getState, { history }) => {
   try {
     const roomId = getState().chat.currentChat.roomId;
     const res = await chatAPI.outRoom(roomId);
-    window.alert('채팅방이 생성되었습니다.')
     dispatch(getChatList());
-    closePopup();
+    
   }
   catch (error) {
     console.log(error);

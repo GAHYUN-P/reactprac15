@@ -10,7 +10,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // components
 import InvitePop from '../components/InvitePop';
+import { Button } from '../elements';
 
+// 채팅 관련 함수들 가져오기
+import { chatActions } from '../redux/modules/chat';
+
+import { history } from "../redux/configureStore";
+import axios from 'axios';
+import { userAPI } from '../shared/api';
 
 // 메시지 리스트 컴포넌트
 const MessageList = (props) => {
@@ -36,15 +43,23 @@ const MessageList = (props) => {
   // 팝업창 키기/종료
   //  false가 기본 상태
   const [popupOpen, setPopupOpen] = React.useState(false);
-
+  
   // 팝업창 키기/끄기 함수
   const openPopup = () => {
     setPopupOpen(true);
+    //
   };
   const closePopup = () => {
     setPopupOpen(false);
   };
 
+  /* const OutMessageList = () => {
+    dispatch(chatActions.clearMessages());
+    dispatch(chatActions.clearCurrentChat());
+    history.replace('/chat')
+
+  } */
+ 
 
   return (
     <Container className="scroll" id="messagelist">
@@ -53,12 +68,18 @@ const MessageList = (props) => {
       })}
 
       <div ref={messageEndRef}></div>
-
-      <button onClick={openPopup}>초대하기</button>
-      {/* 채팅 생성 팝업 창 */}
-      {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
       
-      <button>나가기</button>
+        <Button width="10%" onClick={openPopup}>
+          초대하기
+        </Button>
+        <br/>
+        {/* 채팅 생성 팝업 창 */}
+        {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
+
+        <Button width="10%" /* onClick={OutMessageList} */>
+          나가기
+        </Button>
+      
     </Container>
   );
 };

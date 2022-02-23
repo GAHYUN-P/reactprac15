@@ -36,7 +36,7 @@ const MessageWrite = (props) => {
     autoFocusRef.current?.focus();
   }, []);
 
-
+// 개띠용임?? 왜 여기서 onSubmit으로 채우려고함?
   return (
     <Container>
       <Input

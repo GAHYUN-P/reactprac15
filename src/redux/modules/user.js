@@ -161,6 +161,7 @@ const updateUserProfile = (userId, data) => async (
 ) => {
   try {
     const res = await userAPI.updateUserProfile(userId, data);
+    console.log(res.data)
     alert('회원정보를 수정했습니다');
     // 수정된 정보 store에 다시 저장
     dispatch(login(res.data));

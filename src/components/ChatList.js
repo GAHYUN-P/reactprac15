@@ -20,12 +20,13 @@ import { chatAPI } from '../shared/api';
 
 // 채팅 리스트 컴포넌트
 // 모바일, 데스크탑에 따라 위치가 달리지도록 한다
-//  모바일 : 채팅 리스트를 상단의 원으로 표시
-//  데스크탑 : 채팅 리스트를 좌측에 리스트로 표시
+// 모바일 : 채팅 리스트를 상단의 원으로 표시
+// 데스크탑 : 채팅 리스트를 좌측에 리스트로 표시
 const ChatList = (props) => {
   const dispatch = useDispatch();
   // 채팅 리스트 리덕스로부터 가져오기
   const chat_list = useSelector((state) => state.chat.chatInfo);
+  console.log(chat_list)
   // 조회할 태그(카테고리)
   const [tag, setTag] = React.useState('');
 

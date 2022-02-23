@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://3.37.62.143';
+axios.defaults.baseURL = 'http://52.79.54.15';
 
 /* const openApi = axios.create();
 openApi.defaults.withCredentials=false;
@@ -40,6 +40,9 @@ export const userAPI = {
 export const chatAPI = {
   createRoom: function (data) {
     return axios.post(`/api/chat/rooms`, data);
+  },
+  outRoom: function (roomId) {
+    return axios.post(`/api/chat/rooms/${roomId}`);
   },
   getChatList: function () {
     return axios.get(`/api/chat/rooms`);

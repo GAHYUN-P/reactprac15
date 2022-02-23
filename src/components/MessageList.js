@@ -8,6 +8,9 @@ import Message from '../elements/Message';
 // 리덕스 접근
 import { useSelector, useDispatch } from 'react-redux';
 
+// components
+import InvitePop from '../components/InvitePop';
+
 
 // 메시지 리스트 컴포넌트
 const MessageList = (props) => {
@@ -30,6 +33,18 @@ const MessageList = (props) => {
     scrollTomBottom();
   }, [messages]);
 
+  // 팝업창 키기/종료
+  //  false가 기본 상태
+  const [popupOpen, setPopupOpen] = React.useState(false);
+
+  // 팝업창 키기/끄기 함수
+  const openPopup = () => {
+    setPopupOpen(true);
+  };
+  const closePopup = () => {
+    setPopupOpen(false);
+  };
+
 
   return (
     <Container className="scroll" id="messagelist">
@@ -38,6 +53,12 @@ const MessageList = (props) => {
       })}
 
       <div ref={messageEndRef}></div>
+
+      <button onClick={openPopup}>초대하기</button>
+      {/* 채팅 생성 팝업 창 */}
+      {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
+      
+      <button>나가기</button>
     </Container>
   );
 };

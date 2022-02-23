@@ -6,6 +6,7 @@ import { chatAPI } from '../../shared/api';
 export const initialState = {
   // 채팅 리스트를 받는 배열
   chatInfo: [],
+  chatOut: false,
   // 현재 접속 채팅 방
   currentChat: {
     roomId: null,
@@ -27,6 +28,8 @@ export const initialState = {
 
 // 채팅 리스트를 다루는 액션
 const getChat = createAction('chat/GETCHAT');
+// 채팅방 나가기
+const outChat = createAction('chat/OUTCHAT');
 // 채팅방을 옮기는 액션
 const moveChat = createAction('chat/MOVECHAT');
 // 채팅방의 대화 내용을 가져오기
@@ -50,9 +53,13 @@ const clearCategory = createAction('chat/CELARCATEGORY');
 // 카테고리 삭제
 const deleteCategory = createAction('chat/DELETECATEGORY');
 
+
 const chat = createReducer(initialState, {
   [getChat]: (state, action) => {
     state.chatInfo = action.payload;
+  },
+  [outChat]: (state, action) => {
+    state.chatOut = action.payload;
   },
   [moveChat]: (state, action) => {
     state.currentChat = action.payload;
@@ -122,6 +129,19 @@ const getChatMessages = () => async (dispatch, getState, { history }) => {
     const res = await chatAPI.getChatMessages(roomId);
     const chatMessagesArray = res.data.content;
     dispatch(setMessages(chatMessagesArray));
+  }
+  catch (error) {
+    console.log(error);
+  }
+};
+
+const outRoom = (data, closePopup) => async (dispatch, getState, { history }) => {
+  try {
+    const roomId = getState().chat.currentChat.roomId;
+    const res = await chatAPI.outRoom(roomId);
+    window.alert('채팅방이 생성되었습니다.')
+    dispatch(getChatList());
+    closePopup();
   }
   catch (error) {
     console.log(error);

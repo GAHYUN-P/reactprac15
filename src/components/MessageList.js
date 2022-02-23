@@ -73,7 +73,7 @@ const MessageList = (props) => {
       <div ref={messageEndRef}></div>
 
       <BtnContainer>
-        <Button onClick={openPopup} width="10%">초대하기</Button>
+        <Button _onClick={openPopup} width="10%">초대하기</Button>
         {/* 초대하기 팝업 창 */}
         {popupOpen && <InvitePop visible={popupOpen} closePopup={closePopup} />}
         
@@ -85,7 +85,6 @@ const MessageList = (props) => {
                 margin="0px 2px"
                 >나가기</Button>
       </BtnContainer>
-      
     </Container>
   );
 };
@@ -108,11 +107,10 @@ const BtnContainer = styled.div`
   ${(props) => props.theme.border_box};
   display: flex;
   position: fixed;
-  bottom: 76%;
-  left: 33%;
+  bottom: 92%;
+  left: 79%;
   width: 100%;
-  height: 18%;
-  padding: 30px 30px 60px 30px;
+  height: 50px;
   overflow: auto;
   @media ${(props) => props.theme.mobile} {
     height: 90%;

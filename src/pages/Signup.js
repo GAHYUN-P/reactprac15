@@ -16,7 +16,7 @@ const Signup = (props) => {
 
   // input 입력 값
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const [nickname, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
 
@@ -49,9 +49,10 @@ const Signup = (props) => {
     if (!checkTotalvalidation()) return alert('입력요건을 지켜주세요');
 
     const data = {
-      username,
+      nickname,
       email,
-      password
+      password,
+      passwordCheck
     };
 
     dispatch(userActions.signup(data));
@@ -104,7 +105,7 @@ const Signup = (props) => {
 
   const checkTotalvalidation = () => {
     let passEmail = email && isValidEmail && isValidEmailMultiple;
-    let passUsername = username && isValidUsername;
+    let passUsername = nickname && isValidUsername;
     let passPw =
       password &&
       isValidPassword &&
@@ -247,7 +248,7 @@ const Signup = (props) => {
         <Wrapper margin="0.5rem">
           <Button
             _onClick={onClickSignup}
-            disabled={!email || !username || !password || !passwordCheck}
+            disabled={!email || !nickname || !password || !passwordCheck}
           >
             회원가입
           </Button>

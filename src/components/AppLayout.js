@@ -32,7 +32,7 @@ function AppLayout(props) {
     if (token && !is_login) {
       // access 토큰을 header에 넣고, 토큰으로 user정보를 불러옴
       axios.defaults.headers.common['token'] = `${token}`;
-      dispatch(userActions.fetchUserProfile());
+      // dispatch(userActions.fetchUserProfile());
     }
   }, []);
   

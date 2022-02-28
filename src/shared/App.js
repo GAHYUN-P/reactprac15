@@ -18,7 +18,6 @@ import AppLayout from '../components/AppLayout';
 import Home from '../pages/Home';
 import PasswordFind from '../pages/PasswordFind';
 import UserInfo from '../pages/UserInfo';
-import NotificationTest from '../pages/NotificationTest';
 
 function App() {
   return (
@@ -31,7 +30,6 @@ function App() {
           <Route path="/signup" exact component={Signup} />
           <Route path="/userInfo" exact component={UserInfo} />
           <Route path="/findPassword" exact component={PasswordFind} />
-          <Route path="/test" exact component={NotificationTest} />
           <Route component={NotFound} />
         </Switch>
       </AppLayout>

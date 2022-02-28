@@ -16,7 +16,7 @@ const Signup = (props) => {
 
   // input 입력 값
   const [email, setEmail] = useState('');
-  const [nickname, setUsername] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
 
@@ -49,10 +49,9 @@ const Signup = (props) => {
     if (!checkTotalvalidation()) return alert('입력요건을 지켜주세요');
 
     const data = {
-      nickname,
+      username,
       email,
-      password,
-      passwordCheck
+      password
     };
 
     dispatch(userActions.signup(data));
@@ -105,7 +104,7 @@ const Signup = (props) => {
 
   const checkTotalvalidation = () => {
     let passEmail = email && isValidEmail && isValidEmailMultiple;
-    let passUsername = nickname && isValidUsername;
+    let passUsername = username && isValidUsername;
     let passPw =
       password &&
       isValidPassword &&
@@ -248,7 +247,7 @@ const Signup = (props) => {
         <Wrapper margin="0.5rem">
           <Button
             _onClick={onClickSignup}
-            disabled={!email || !nickname || !password || !passwordCheck}
+            disabled={!email || !username || !password || !passwordCheck}
           >
             회원가입
           </Button>
@@ -261,12 +260,9 @@ const Signup = (props) => {
 const Container = styled.div`
   width: 100%;
   height: 100%;
-
   ${(props) => props.theme.flex_column};
   align-items: center;
   justify-content: center;
-
-
 `;
 
 const Input = styled.input`

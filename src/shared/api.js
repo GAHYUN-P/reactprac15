@@ -7,7 +7,6 @@ axios.defaults.baseURL = 'http://52.79.54.15';
 openApi.defaults.withCredentials=false;
 const token = `KakaoAK 08f47c215f89ea20492b07610fc231dc`
  */
-
 export const userAPI = {
   login: function (data) {
     return axios.post('/api/user/login', data);
@@ -22,7 +21,7 @@ export const userAPI = {
     return axios.post(`/api/user/signup`, data);
   },
   emailCheck: function (data) {
-    return axios.post(`/api/user/idcheck`, data);
+    return axios.post(`/api/user/signup/emailCheck`, data);
   },
   findPassword: function (data) {
     return axios.post('/api/user/findPassword', data);

@@ -62,7 +62,6 @@ const user = createReducer(initialState, {
 // 일반 회원가입 api 호출
 const signup = (data) => async (dispatch, getState, { history }) => {
   try {
-    console.log(data);
     const res = await userAPI.signup(data);
 
     alert('회원가입이 완료되었습니다');
@@ -77,17 +76,9 @@ const signup = (data) => async (dispatch, getState, { history }) => {
 const emailCheck = (email) => async (dispatch, getState, { history }) => {
   try {
     const res = await userAPI.emailCheck({ email });
-    console.log(res);
-    const checked = res.data.result;
-
-    if(checked === 'true')
-    {
-      alert('사용 가능한 이메일입니다');
-      // 회원가입 페이지에서 벨리데이션 표시
-      dispatch(setIsValidEmailMultiple(true));
-    } else {
-      alert('이미 사용중인 이메일입니다');
-    }
+    alert('사용 가능한 이메일입니다');
+    // 회원가입 페이지에서 벨리데이션 표시
+    dispatch(setIsValidEmailMultiple(true));
   } catch (error) {
     alert('이미 사용중인 이메일입니다');
   }
@@ -97,22 +88,21 @@ const emailCheck = (email) => async (dispatch, getState, { history }) => {
 const fetchLogin = (data) => async (dispatch, getState, { history }) => {
   try {
     const res = await userAPI.login(data);
-    console.log(res);
 
-    const token = res.data;
-    // const username = res.data.username;
-    // const userId = res.data.userid;
+    const token = res.data.token;
+    const username = res.data.username;
+    const userId = res.data.userid;
     // 쿠키에 정보 저장
     setCookie('access-token', token);
-    // setCookie('username', username);
-    // setCookie('userId', userId);
-    // setCookie('email', data.email);
+    setCookie('username', username);
+    setCookie('userId', userId);
+    setCookie('email', data.email);
 
     // 헤더에 토큰 저장
     axios.defaults.headers.common['token'] = `${token}`;
 
-    // // 토큰으로 유저정보 받아오는 api 호출
-    // dispatch(fetchUserProfile(1));
+    // 토큰으로 유저정보 받아오는 api 호출
+    dispatch(fetchUserProfile(1));
   } catch (error) {
     console.error(error);
     dispatch(setLoginError(error.response.data.errorMessage));
@@ -137,8 +127,8 @@ const loginByKakao = (data) => async (dispatch, getState, { history }) => {
     // 헤더에 토큰 저장
     axios.defaults.headers.common['token'] = `${token}`;
 
-    // // 토큰으로 유저정보 받아옴
-    // dispatch(fetchUserProfile(1));
+    // 토큰으로 유저정보 받아옴
+    dispatch(fetchUserProfile(1));
   } catch (error) {
     console.error(error);
     dispatch(setLoginError(error.response.data.errorMessage));
@@ -187,26 +177,26 @@ const updateUserProfile = (userId, data) => async (
   }
 };
 
-// // 토큰으로 user 정보 가져옴
-// const fetchUserProfile = (type = 0) => async (
-//   dispatch,
-//   getState,
-//   { history }
-// ) => {
-//   try {
-//     const res = await userAPI.getUserProfile();
-//     dispatch(login(res.data));
-//     // 헤더에 토큰으로 유저정보 가져오는 로직
-//     // 로그인 유지와 로그인에서 사용
+// 토큰으로 user 정보 가져옴
+const fetchUserProfile = (type = 0) => async (
+  dispatch,
+  getState,
+  { history }
+) => {
+  try {
+    const res = await userAPI.getUserProfile();
+    dispatch(login(res.data));
+    // 헤더에 토큰으로 유저정보 가져오는 로직
+    // 로그인 유지와 로그인에서 사용
 
-//     // 첫 로그인시에 페이지이동 하기 위해 type으로 분기, type=0은 로그인 유지이므로 페이지이동 x
-//     if (type === 1) {
-//       history.push('/chat');
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+    // 첫 로그인시에 페이지이동 하기 위해 type으로 분기, type=0은 로그인 유지이므로 페이지이동 x
+    if (type === 1) {
+      history.push('/chat');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // 유저 이메일 닉네임 리스트 가져오기
 const getAllUserList = () => async (dispatch, getState, { history }) => {
@@ -234,7 +224,7 @@ export const userActions = {
   setAuthNumber,
   updatePassword,
   loginByKakao,
-  // fetchUserProfile,
+  fetchUserProfile,
   updateUserProfile
 };
 
